@@ -3,15 +3,19 @@ import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
-type Params = Promise<{ inviteCode: string }>;
-
-export default async function InviteCodePage({ params }: { params: Params }) {
-  const { inviteCode } = await params;
+export default async function InviteCodePage({
+  params,
+}: {
+  params: { inviteCode: string } | Promise<{ inviteCode: string }>;
+}) {
+  const { inviteCode } =
+    params instanceof Promise ? await params : params;
 
   const profile = await currentProfile();
   if (!profile) {
     return <RedirectToSignIn />;
   }
+
   if (!inviteCode) {
     redirect("/");
   }
@@ -32,16 +36,10 @@ export default async function InviteCodePage({ params }: { params: Params }) {
   }
 
   const server = await db.server.update({
-    where: {
-      inviteCode,
-    },
+    where: { inviteCode },
     data: {
       members: {
-        create: [
-          {
-            profileId: profile.id,
-          },
-        ],
+        create: [{ profileId: profile.id }],
       },
     },
   });
