@@ -24,7 +24,7 @@ export async function DELETE(
   }
 }
 
-export async function PATH(
+export async function PATCH(
   req: Request,
   { params }: { params: { serverId: string } }
 ) {
