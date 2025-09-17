@@ -19,8 +19,6 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIO) => {
       addTrailingSlash: false,
     });
     io.on("connection", (socket) => {
-      console.log("✅ New client connected:", socket.id);
-
       socket.on("ping-check", (callback: () => void) => {
         callback();
       });

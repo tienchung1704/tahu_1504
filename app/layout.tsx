@@ -7,7 +7,6 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import QueryProvider from "@/components/providers/query-provider";
 import { Open_Sans } from "next/font/google";
-
 const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

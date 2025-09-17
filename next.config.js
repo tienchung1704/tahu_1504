@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config) => {
     config.externals.push({
@@ -10,14 +11,14 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.ufs.sh", 
+        hostname: "**.ufs.sh",
       },
       {
         protocol: "https",
-        hostname: "utfs.io", 
+        hostname: "utfs.io",
       },
     ],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

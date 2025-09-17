@@ -35,7 +35,7 @@ const ServerIdLayout = async ({
         <ServerSidebar serverId={serverId} />
       </div>
       <main className="h-full md:pl-60">{profile && children}</main>
-      <div className="hidden md:flex h-full w-60 z-1 flex-col fixed inset-y-0 right-0 border-l-1 my-12 ">
+      <div className="hidden md:flex h-full w-60 flex-col fixed inset-y-0 right-0 border-l-1 my-12 ">
         <ShowMemberChannel serverId={serverId} />
       </div>
     </div>

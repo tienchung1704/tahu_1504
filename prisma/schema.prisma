@@ -70,6 +70,9 @@ model Member{
   
   conversationsInitiated Conversation[] @relation("MemberOne")
   conversationsReceived Conversation[] @relation("MemberTwo")
+
+    channels  ChannelMember[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -95,6 +98,7 @@ model Channel{
   server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   messages Message[]
+  members ChannelMember[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -155,4 +159,20 @@ model DirectMessage {
   deleted Boolean @default(false)
   @@index([memberId])
   @@index([conversationId])
+}
+
+model ChannelMember {
+  id        String   @id @default(uuid())
+  
+  channelId String
+  channel   Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  
+  memberId  String
+  member    Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  joinedAt  DateTime @default(now())
+
+  @@unique([channelId, memberId]) // 1 member chỉ join 1 channel một lần
+  @@index([channelId])
+  @@index([memberId])
 }

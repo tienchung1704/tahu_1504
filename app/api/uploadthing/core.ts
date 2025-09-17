@@ -11,15 +11,15 @@ const handleAuth = async () => {
 
 export const ourFileRouter = {
   serverImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
-    .middleware(() => handleAuth())
+    .middleware(async () => await handleAuth())
     .onUploadComplete(async ({ file }) => {
-      console.log(" Upload done:", file.url);
+      console.log("✅ Upload server image done:", file.url);
     }),
 
   messageFile: f(["image", "pdf"])
-    .middleware(() => handleAuth())
+    .middleware(async () => await handleAuth())
     .onUploadComplete(async ({ file }) => {
-      console.log(" Upload done:", file.url);
+      console.log("✅ Upload message file done:", file.url);
     }),
 } satisfies FileRouter;
 

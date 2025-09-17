@@ -49,3 +49,22 @@ export async function POST(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
+
+export async function GET(
+  req: Request,
+  { params }: { params: { channelId: string } }
+) {
+  try {
+    const members = await db.channelMember.findMany({
+      where: { channelId: params.channelId },
+      include: {
+        member: { include: { profile: true } },
+      },
+    });
+
+    return NextResponse.json(members);
+  } catch (error) {
+    console.error("[CHANNEL_MEMBERS]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
