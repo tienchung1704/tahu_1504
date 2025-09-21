@@ -24,7 +24,6 @@ const formSchema = z.object({
 
 const PERSPECTIVE_API_KEY = process.env.NEXT_PUBLIC_PERSPECTIVE_API_KEY; // lưu trong .env.local
 
-// Hàm check toxic/spam bằng Google Perspective API
 const checkToxic = async (text: string) => {
   try {
     const response = await axios.post(

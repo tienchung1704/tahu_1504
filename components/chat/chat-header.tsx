@@ -1,12 +1,14 @@
 import { Hash, Menu, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { MobileToggle } from "@/components/mobile-toggle/mobile-toggle";
-import { UserAvatar } from "../ui/user-avatar";
-import { SocketIndicator } from "../socket-indicator";
+import { UserAvatar } from "@/components/ui/user-avatar";
+import { SocketIndicator } from "@/components/socket-indicator";
 import { ChatVideoButton } from "./chat-video-button";
 import { db } from "@/lib/db";
-import { ChannelType, MemberRole } from "@/lib/generated/prisma/client"; import { ServerSearch } from "../server/server-search";
+import { ChannelType, MemberRole } from "@/lib/generated/prisma/client";
+import { ServerSearch } from "@/components/server/server-search";
 import { currentProfile } from "@/lib/current-profile";
 import { redirect } from "next/navigation";
+import { ModeToggle } from "@/components/mode-toggle";
 interface ChatHeaderProps {
     serverId: string,
     name: string,
@@ -65,12 +67,15 @@ export const ChatHeader = async ({ serverId, name, type, imgUrl }: ChatHeaderPro
             {type === "conversation" && (
                 <UserAvatar src={imgUrl} className="h-8 w-8 md:h-8 mr-2" />
             )}
+
             <p className="font-semibold text-md text-black dark:text-white">{name}</p>
             <div className="ml-auto mr-62 flex items-center">
                 {type === "conversation" && (
                     <ChatVideoButton />
                 )}
+                <ModeToggle />
                 <SocketIndicator />
+
                 <div className="w-53 absolute right-4">
                     <ServerSearch data={[{
                         label: "Text Channels",
@@ -115,6 +120,7 @@ export const ChatHeader = async ({ serverId, name, type, imgUrl }: ChatHeaderPro
 
                     ]}
                     />
+
                 </div>
 
             </div>

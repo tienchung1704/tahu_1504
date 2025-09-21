@@ -38,7 +38,6 @@ export const NanigationSideBar = async () => {
             <div
                className="pb-3 mt-auto flex items-center justify-center flex-col gap-y-4" 
             >
-                <ModeToggle />
                 <UserButton 
                     appearance={{
                         elements:{
