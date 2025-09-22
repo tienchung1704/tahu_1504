@@ -17,6 +17,7 @@ import { SelectInterestsModal } from "@/components/modals/select-interest-modal"
 import { StartServerModal } from "../modals/start-server-modal";
 import { PublicServerModal } from "../modals/select-hobby-server-modal";
 import { CreatePublicServerModal } from "../modals/create-server-public-modal";
+import { GetPublicServerModal } from "../modals/get-public-server-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -48,6 +49,7 @@ export const ModalProvider = () => {
       <DeleteMessageModal />
       <SelectInterestsModal />
       <StartServerModal />
+      <GetPublicServerModal />
     </>
   );
 };

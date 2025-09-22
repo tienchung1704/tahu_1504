@@ -16,6 +16,7 @@ export type ModalType =
   | "publicServer"
   | "createStartServer"
   | "createPublicServer"
+  | "getPublicServer"
   | "selectInterests";
 
 interface ModalData {

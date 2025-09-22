@@ -1,11 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import React from "react";
 import { useState } from "react";
 import {
   Dialog,
@@ -84,7 +79,7 @@ export function PublicServerModal() {
                     type="button"
                     variant={selected === interest ? "default" : "outline"}
                     onClick={() => toggleInterest(interest)}
-                    className="flex items-center gap-2 dark:bg-zinc-300 dark:text-shadow-zinc-700"
+                    className="flex items-center gap-2 dark:bg-zinc-200 dark:text-shadow-zinc-700"
                   >
                     <span>{iconInterestList[index]}</span>
                     {interest}
