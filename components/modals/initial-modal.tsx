@@ -77,7 +77,7 @@ export function InitialModal() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 grid px-6">
               <Button
-                className="bg-emerald-200 text-zinc-800 w-full dark:bg-zinc-500"
+                className="bg-emerald-200 text-zinc-800 w-full dark:bg-emerald-200"
                 disabled={isLoading}
                 variant="secondary"
                 onClick={() => onOpen("createStartServer")}
@@ -88,7 +88,7 @@ export function InitialModal() {
                 Create My Own
               </Button>
               <Button
-                className="bg-purple-300 text-zinc-800 w-full dark:bg-zinc-500"
+                className="bg-purple-300 text-zinc-800 w-full dark:bg-purple-300"
                 disabled={isLoading}
                 variant="secondary"
                 onClick={() => onOpen("publicServer")}
@@ -104,7 +104,7 @@ export function InitialModal() {
         <DialogFooter className="bg-gray-100 w-full items-center align-middle grid  px-6 py-4">
           <p className="ml-35 text-sm">Or your already have a link</p>
           <Button
-            className="bg-zinc-300 text-zinc-800 w-full dark:bg-zinc-500 mr-85"
+            className="bg-zinc-300 text-zinc-800 w-full dark:bg-zinc-200 mr-85"
             onClick={onClick}
             variant="secondary"
           >
