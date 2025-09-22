@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: Request) {
   try {
-    const { name, imageUrl } = await req.json();
+    const { name, imageUrl, hobbyServer, isPublic } = await req.json();
     const profile = await currentProfile();
 
     if (!profile) {
@@ -17,6 +17,8 @@ export async function POST(req: Request) {
         name: name,
         imageUrl,
         inviteCode: uuidv4(),
+        isPublic: isPublic ?? false,
+        hobby: hobbyServer,
         channels: {
           create: [{ name: "general", profileId: profile.id }],
         },

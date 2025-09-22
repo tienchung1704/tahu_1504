@@ -13,6 +13,10 @@ import { EditChanelModal } from "@/components/modals/edit-channel-modal";
 import { MessageFileModal } from "@/components/modals/message-file";
 import { DeleteMessageModal } from "@/components/modals/delete-message";
 import JoinServerModal from "../modals/jion-server-modal";
+import { SelectInterestsModal } from "@/components/modals/select-interest-modal";
+import { StartServerModal } from "../modals/start-server-modal";
+import { PublicServerModal } from "../modals/select-hobby-server-modal";
+import { CreatePublicServerModal } from "../modals/create-server-public-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -25,12 +29,13 @@ export const ModalProvider = () => {
   if (!isMounted) {
     return null;
   }
-  console.log("Render modals...");
 
   return (
     <>
       <CreateServerModal />
+      <PublicServerModal />
       <JoinServerModal />
+      <CreatePublicServerModal />
       <InviteModal />
       <MembersModal />
       <EditServerModal />
@@ -41,6 +46,8 @@ export const ModalProvider = () => {
       <EditChanelModal />
       <MessageFileModal />
       <DeleteMessageModal />
+      <SelectInterestsModal />
+      <StartServerModal />
     </>
   );
 };

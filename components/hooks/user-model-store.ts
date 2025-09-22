@@ -12,7 +12,11 @@ export type ModalType =
   | "editChannel"
   | "messageFile"
   | "deleteMessage"
-  | "joinServer";
+  | "joinServer"
+  | "publicServer"
+  | "createStartServer"
+  | "createPublicServer"
+  | "selectInterests";
 
 interface ModalData {
   server?: Server;
@@ -28,6 +32,11 @@ interface ModalStore {
   isOpen: boolean;
   onOpen: (type: ModalType, data?: ModalData) => void;
   onClose: () => void;
+  hobbyServer?: string;
+  hobyyUser?: Record<string, any>;
+  setHobbyServer: (hobby: string | undefined) => void;   
+  setHobbyUser: (hobby: Record<string, any> | undefined) => void;
+
 }
 
 export const useModal = create<ModalStore>((set) => ({
@@ -35,5 +44,10 @@ export const useModal = create<ModalStore>((set) => ({
   data: {},
   isOpen: false,
   onOpen: (type, data = {}) => set({ isOpen: true, type, data }),
-  onClose: () => set({ isOpen: false, type: null })
+  onClose: () => set({ isOpen: false, type: null }),
+  hobbyServer: undefined,
+  hobyyUser: undefined,
+  setHobbyServer: (hobby) => set({ hobbyServer: hobby }),
+  setHobbyUser: (hobby) => set({ hobyyUser: hobby }),
+
 }));

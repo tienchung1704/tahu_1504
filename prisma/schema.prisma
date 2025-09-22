@@ -14,13 +14,44 @@ datasource db {
   url      = env("DATABASE_URL")
   relationMode="prisma"
 }
+enum HobbyType {
+  GAMING
+  MUSIC
+  PROGRAMMING
+  MOVIES
+  SPORTS
+  ANIME
+  BOOKS
+  TECHNOLOGY
+  TRAVEL
+  FOOD
+}
+model Hobby {
+  id        String     @id @default(uuid())
+  type      HobbyType
+  profiles  ProfileHobby[]
+}
+model ProfileHobby {
+  id        String   @id @default(uuid())
+  
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
+  hobbyId   String
+  hobby     Hobby    @relation(fields: [hobbyId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, hobbyId]) // 1 user không chọn trùng hobby
+  @@index([profileId])
+  @@index([hobbyId])
+}
 model Profile{
   id String @id @default(uuid())
   userId String @unique
   name String
   imageUrl String @db.Text
   email String @db.Text
+
+ hobbies  ProfileHobby[]
 
   servers Server[]
   members Member[]
@@ -42,6 +73,8 @@ model Server{
   
   members Member[]
   channels Channel[]
+  hobby      String?
+  isPublic   Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,7 +104,7 @@ model Member{
   conversationsInitiated Conversation[] @relation("MemberOne")
   conversationsReceived Conversation[] @relation("MemberTwo")
 
-    channels  ChannelMember[]
+  channels  ChannelMember[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

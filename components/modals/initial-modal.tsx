@@ -12,24 +12,16 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { FileUpload } from "@/components/file-upload";
-import { useModal } from "../hooks/user-model-store";
+import { useModal } from "@/components/hooks/user-model-store";
+import { on } from "events";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Server name is required." }),
-  imageUrl: z.string().min(1, { message: "Server image is required." })
+  imageUrl: z.string().min(1, { message: "Server image is required." }),
 });
 
 export function InitialModal() {
@@ -41,8 +33,8 @@ export function InitialModal() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      imageUrl: ""
-    }
+      imageUrl: "",
+    },
   });
 
   const isLoading = form.formState.isSubmitting;
@@ -68,7 +60,7 @@ export function InitialModal() {
     onClose();
     router.refresh();
     onOpen("joinServer");
-  }
+  };
   return (
     <Dialog open>
       <DialogContent className="sm:max-w-[500px] bg-white text-black p-0 overflow-hidden">
@@ -83,59 +75,41 @@ export function InitialModal() {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="space-y-8 px-6">
-              <div className="flex items-center justify-center text-center">
-                <FormField
-                  control={form.control}
-                  name="imageUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <FileUpload
-                          endpoint="serverImage"
-                          value={field.value}
-                          onChange={field.onChange}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Server Name
-                    </FormLabel>
-                    <div className="flex space-between gap-2">
-
-                      <FormControl>
-                        <Input
-                          disabled={isLoading}
-                          placeholder="Enter server name"
-                          className="bg-zinc-300/50 border-0 focus-visible: ring-0 text-black focus-visible:ring-offset-0"
-                          {...field}
-                        />
-
-                      </FormControl>
-                      <Button disabled={isLoading} variant="primary">
-                        Create
-                      </Button>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <div className="space-y-8 grid px-6">
+              <Button
+                className="bg-emerald-200 text-zinc-800 w-full dark:bg-zinc-500"
+                disabled={isLoading}
+                variant="secondary"
+                onClick={() => onOpen("createStartServer")}
+              >
+                <div>
+                  🛋️
+                </div>
+                Create My Own
+              </Button>
+              <Button
+                className="bg-purple-300 text-zinc-800 w-full dark:bg-zinc-500"
+                disabled={isLoading}
+                variant="secondary"
+                onClick={() => onOpen("publicServer")}
+              >
+                <div>
+                  🌎
+                </div>
+                Create for a club or community
+              </Button>
             </div>
           </form>
         </Form>
-
-        <DialogFooter className="bg-gray-100 align-middle px-6 py-4">
-          <p className="text-xs text-zinc-700 dark:text-zinc-400">
-            You already have a server? <button className="text-indigo-500 underline" onClick={onClick}>Click here</button>
-          </p>
+        <DialogFooter className="bg-gray-100 w-full items-center align-middle grid  px-6 py-4">
+          <p className="ml-35 text-sm">Or your already have a link</p>
+          <Button
+            className="bg-zinc-300 text-zinc-800 w-full dark:bg-zinc-500 mr-85"
+            onClick={onClick}
+            variant="secondary"
+          >
+            Join a Server
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

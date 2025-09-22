@@ -1,4 +1,20 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import React from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 import {
     Form,
     FormControl,
@@ -8,90 +24,110 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import z from "zod";
-import { useModal } from "../hooks/user-model-store";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle
-} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useModal } from "@/components/hooks/user-model-store";
+import { FileUpload } from "../file-upload";
 const formSchema = z.object({
-    link: z.string().min(1, { message: "Server link is required." }),
+    name: z.string().min(1, { message: "Server name is required." }),
+    imageUrl: z.string().min(1, { message: "Server image is required." }),
 });
 
-const JoinServerModal = () => {
-    const { isOpen, onClose, type, onOpen } = useModal();
-    const isModalOpen = isOpen && type === "joinServer";
-
+export function CreatePublicServerModal() {
+    const { isOpen, onClose, type, onOpen, hobbyServer } = useModal();
     const router = useRouter();
+    const isModalOpen = isOpen && type === "createPublicServer";
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            link: "",
+            name: "",
+            imageUrl: "",
         },
     });
+
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const url = new URL(values.link);
-            const inviteRoute = url.pathname.substring(url.pathname.indexOf("/invite"));
-            router.push(inviteRoute);
+            const payload = {
+                ...values,
+                hobbyServer,
+                isPublic: true,
+            };
+            await axios.post("/api/servers", payload);
+
+            form.reset();
+            router.refresh();
             onClose();
         } catch (error) {
             console.error(error);
         }
     };
+
     const handleClose = () => {
         form.reset();
         onClose();
     };
+    const onClick = () => {
+        onClose();
+        router.refresh();
+        onOpen("joinServer");
+    }
+
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Join the Server
+                        Customize your server
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
-                        Paste the invite link to join an existing server
+                        Give your server a personality with a name and an image. You can
+                        always change it later.
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <div className="space-y-8 px-6">
                             <div className="flex items-center justify-center text-center">
+                                <FormField
+                                    control={form.control}
+                                    name="imageUrl"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <FileUpload
+                                                    endpoint="serverImage"
+                                                    value={field.value}
+                                                    onChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
                             </div>
                             <FormField
                                 control={form.control}
-                                name="link"
+                                name="name"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className=" text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                                            Server Link
+                                        <FormLabel className="text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                                            Server Name
                                         </FormLabel>
                                         <div className="flex space-between gap-2">
                                             <FormControl>
                                                 <Input
                                                     disabled={isLoading}
-                                                    placeholder="https://discord.gg/aBcdxYz23"
+                                                    placeholder="Enter server name"
                                                     className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0 w-[88%]"
                                                     {...field}
                                                 />
                                             </FormControl>
                                             <Button
-                                                type="submit"
                                                 disabled={isLoading}
                                                 className="w-[60px]"
                                                 variant="primary"
                                             >
-                                                Join
+                                                Create
                                             </Button>
                                         </div>
                                         <FormMessage />
@@ -102,22 +138,13 @@ const JoinServerModal = () => {
                     </form>
                 </Form>
                 <DialogFooter className="bg-gray-100 w-full items-center align-middle grid  px-6 py-4">
-                    <p className="ml-27 text-sm ">Or explore our public Server below</p>
-                    <Button
-                        className="bg-zinc-300 text-black w-full dark:bg-zinc-500 mr-20"
-                        variant="secondary"
-                        onClick={() => {
-                            onOpen("selectInterests");
-                        }}
-                    >
-                        Or select your interests and join our public Server
-                    </Button>
+                    <p className="text-xs">
+                        {" "}
+                        By successfully creating a public server, you agree to our public{" "}
+                        <span className="text-blue-500 cursor-pointer">Discord terms.</span>
+                    </p>
                 </DialogFooter>
-
             </DialogContent>
         </Dialog>
-
     );
-};
-
-export default JoinServerModal;
+}
