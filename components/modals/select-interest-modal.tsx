@@ -52,10 +52,7 @@ export function SelectInterestsModal() {
 
     const handleNext = () => {
         setHobbyUser(selected);
-
-        console.log("Selected interests:", selected);
-
-
+        
     };
 
     return (
@@ -74,7 +71,7 @@ export function SelectInterestsModal() {
                             type="button"
                             variant={selected.includes(interest) ? "default" : "outline"}
                             onClick={() => toggleInterest(interest)}
-                            className="flex items-center gap-2"
+                            className="flex items-center gap-2 dark:text-shadow-zinc-300"
                         >
                             <span>{iconInterestList[index]}</span>
                             {interest}

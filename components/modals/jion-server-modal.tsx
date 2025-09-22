@@ -104,7 +104,7 @@ const JoinServerModal = () => {
                 <DialogFooter className="bg-gray-100 w-full items-center align-middle grid  px-6 py-4">
                     <p className="ml-27 text-sm ">Or explore our public Server below</p>
                     <Button
-                        className="bg-zinc-300 text-black w-full dark:bg-zinc-500 mr-20"
+                        className="bg-zinc-500 text-zinc-700 w-full dark:bg-zinc-300 dark:text-zinc-500 mr-20"
                         variant="secondary"
                         onClick={() => {
                             onOpen("selectInterests");

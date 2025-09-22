@@ -69,11 +69,10 @@ export function PublicServerModal() {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Customize your server
+            Select your Hobby
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Give your server a personality with a name and an image. You can
-            always change it later.
+            This will help us to customize your server
           </DialogDescription>
         </DialogHeader>
           <form  className="space-y-8">
@@ -85,7 +84,7 @@ export function PublicServerModal() {
                     type="button"
                     variant={selected === interest ? "default" : "outline"}
                     onClick={() => toggleInterest(interest)}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 dark:bg-zinc-300 dark:text-shadow-zinc-700"
                   >
                     <span>{iconInterestList[index]}</span>
                     {interest}
