@@ -77,14 +77,7 @@ const PaymentPageModal = () => {
         <Button
           className="ml-10  w-[120px] p-2 bg-white dark:bg-white text-zinc-800"
           variant="outline"
-          onClick={async () => {
-            const res = await axios.post("/api/checkout/vnpay", {
-              plan: data.paymentSelect,
-              userId: user?.user?.id,
-            });
-            if (res.data.url) {
-              window.location.href = res.data.url;
-            }
+          onClick={() => {
           }}
         >
           <Image
