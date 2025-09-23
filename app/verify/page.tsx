@@ -1,35 +1,11 @@
 "use client";
-
-import { useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { Suspense } from "react";
+import VerifyClient from "@/components/verify/verify";
 
 export default function VerifyPage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  useEffect(() => {
-    const success = searchParams?.get("success");
-    const userId = searchParams?.get("userId");
-
-    if (success === "true" && userId) {
-      axios
-        .post("/api/verify-payment", { userId })
-        .then(() => {
-          toast.success("Payment successful!");
-          router.push("/"); 
-        })
-        .catch((err) => {
-          console.error(err);
-          toast.error("Payment failed!");
-
-        });
-    } else {
-      toast.info("Payment canceled");
-      router.push("/");
-    }
-  }, [searchParams, router]);
-
-  return <p>Verifying payment...</p>;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <VerifyClient />;
+    </Suspense>
+  );
 }
