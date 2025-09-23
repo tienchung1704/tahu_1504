@@ -18,6 +18,8 @@ import { StartServerModal } from "../modals/start-server-modal";
 import { PublicServerModal } from "../modals/select-hobby-server-modal";
 import { CreatePublicServerModal } from "../modals/create-server-public-modal";
 import { GetPublicServerModal } from "../modals/get-public-server-modal";
+import PaymentModal from "../modals/payment";
+import PaymentPageModal from "../modals/payment-page-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -48,8 +50,10 @@ export const ModalProvider = () => {
       <MessageFileModal />
       <DeleteMessageModal />
       <SelectInterestsModal />
+      <PaymentModal />
       <StartServerModal />
       <GetPublicServerModal />
+      <PaymentPageModal />
     </>
   );
 };

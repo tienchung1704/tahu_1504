@@ -4,12 +4,12 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Input } from "../ui/input";
-import { Plus } from "lucide-react";
 import qs from "query-string";
 import axios from "axios";
 import { useModal } from "../hooks/user-model-store";
 import { EmojiPicker } from "../emoji-picker";
 import { useRouter } from "next/navigation";
+import { Gift, Plus } from "lucide-react";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -40,8 +40,7 @@ const checkToxic = async (text: string) => {
 
     const toxicity =
       response.data.attributeScores?.TOXICITY?.summaryScore?.value || 0;
-    const spam =
-      response.data.attributeScores?.SPAM?.summaryScore?.value || 0;
+    const spam = response.data.attributeScores?.SPAM?.summaryScore?.value || 0;
 
     return { toxicity, spam };
   } catch (err) {
@@ -113,7 +112,10 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     {...field}
                     className="px-16 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 "
                   />
-                  <div className="absolute top-7 right-8">
+                  <button className="absolute top-7 right-19" onClick={() => onOpen("payment")}>
+                    <Gift className="cursor-pointer text-zinc-600 dark:text-zinc-400 hover:text-indigo-500 transition" />{" "}
+                  </button>
+                  <div className="absolute top-7 right-8" >
                     <EmojiPicker
                       onChange={(emoji: string) =>
                         field.onChange(`${field.value} ${emoji}`)

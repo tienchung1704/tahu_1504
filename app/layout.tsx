@@ -6,26 +6,27 @@ import { cn } from "@/lib/utils";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import QueryProvider from "@/components/providers/query-provider";
+import "react-toastify/dist/ReactToastify.css";
 import { Open_Sans } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+
 const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Discord Clone",
   description:
-    "Discord Clone with Next.js, React.js, TailWindCSS & TypeScript."
+    "Discord Clone with Next.js, React.js, TailWindCSS & TypeScript.",
 };
 
 export default function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(openSans.className, "bg-white dark:bg-[#313338]")}
-        >
+        <body className={cn(openSans.className, "bg-white dark:bg-[#313338]")}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -34,7 +35,11 @@ export default function RootLayout({
           >
             <SocketProvider>
               <ModalProvider />
-              <QueryProvider>{children}</QueryProvider>
+              <QueryProvider>
+                {" "}
+                <ToastContainer position="top-right" autoClose={3000} />
+                {children}
+              </QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>

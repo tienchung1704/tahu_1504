@@ -4,24 +4,30 @@ import { db } from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
-    const { hobby } = await req.json();
+    const { hobby, userId } = await req.json();
     const profile = await currentProfile();
     if (!profile) return new NextResponse("Unauthorized", { status: 401 });
 
-    const hobbyIds = hobby?.map((h: any) => h.id);
-
+    console.log("Hobby IDs:111111112211111111", hobby);
     const servers = await db.server.findMany({
       where: {
         isPublic: true,
-        hobby: { in: hobbyIds },
+        hobby: { in: hobby },
+        NOT: {
+          OR: [
+            { profile: { userId } }, 
+            { members: { some: { profileId: profile.id } } },
+          ],
+        },
       },
       include: {
         profile: true,
-        _count: {
-          select: { members: true },
+        members: {
+          select: { profileId: true },
         },
       },
     });
+
     return NextResponse.json(servers);
   } catch (err) {
     console.error("Error fetching public servers:", err);

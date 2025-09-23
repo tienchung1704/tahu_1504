@@ -17,6 +17,8 @@ export type ModalType =
   | "createStartServer"
   | "createPublicServer"
   | "getPublicServer"
+  | "payment"
+  | "paymentPage"
   | "selectInterests";
 
 interface ModalData {
@@ -25,6 +27,11 @@ interface ModalData {
   channelType?: ChannelType;
   apiUrl?: string;
   query?: Record<string, any>;
+  paymentSelect?: {
+    name: string;
+    total: number;
+    period: string;
+  };
 }
 
 interface ModalStore {

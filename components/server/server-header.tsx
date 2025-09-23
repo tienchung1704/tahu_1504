@@ -21,8 +21,8 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             <DropdownMenuTrigger
                 className="focus:outline-none" asChild
             >
-                <button className="w-full text-md px-3 ml-auto flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition" >
-                    {server.name}
+                <button className="w-full text-zinc-300 text-md px-3 ml-auto flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition" >
+                    {server.name.length > 21 ? `${server.name.slice(0, 21)}...` : server.name}
                     <ChevronDown className="h-5 w-5 ml-auto" />
                 </button>
 

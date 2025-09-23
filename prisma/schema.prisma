@@ -48,6 +48,8 @@ model Profile{
   id String @id @default(uuid())
   userId String @unique
   name String
+    isPremium Boolean  @default(false)
+
   imageUrl String @db.Text
   email String @db.Text
 
