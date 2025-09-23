@@ -59,6 +59,6 @@ export async function POST(req: Request) {
   })}`;
 console.log("signData:", signData);
 console.log("signed:", signed);
-console.log("paymentUrl:", paymentUrl);
+console.log("paymentUrl:", paymentUrl); 
   return NextResponse.json({ url: paymentUrl });
 }
